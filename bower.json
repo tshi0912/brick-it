@@ -1,0 +1,19 @@
+{
+  "name": "brick-it",
+  "version": "0.1.0",
+  "homepage": "https://github.com/tshi0912/brick-it",
+  "authors": [
+    "Tao Shi <tshi0912@gmail.com>"
+  ],
+  "description": "A Node Sails application which will provide the 3rd party feed back functionality.",
+  "main": "assets/linker/app.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
