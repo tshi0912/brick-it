@@ -1,2 +1,2 @@
 # brick-it
-### a Sails application, which used to create a brick.
+### A Node Sails application which will provide the 3rd party feed back functionality.
