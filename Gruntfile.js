@@ -142,11 +142,13 @@ module.exports = function (grunt) {
       dev: {
         files: [
           {
-          expand: true,
-          cwd: './assets',
-          src: ['**/*.!(coffee)'],
-          dest: '.tmp/public'
-        }
+            expand: true,
+            cwd: './assets',
+            src: ['**/*.!(coffee)'],
+            dest: '.tmp/public'
+          },
+          { '.tmp/public/linker/js/jquery.js': './bower_components/jquery/jquery.js' }
+
         ]
       },
       build: {
