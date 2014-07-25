@@ -43,6 +43,7 @@ module.exports = function (grunt) {
     var jsFilesToInject = [
         'linker/js/jquery.js',
         'linker/js/bootstrap.js',
+        'linker/js/jquery.dataTables.js',
         'linker/js/socket.io.js',
         'linker/js/sails.io.js',
         'linker/js/app.js'
@@ -138,8 +139,16 @@ module.exports = function (grunt) {
                         src: ['**/*'],
                         dest: '.tmp/public/linker/fonts'
                     },
+                    {
+                        expand: true,
+                        cwd: './bower_components/datatables/media/images',
+                        src: ['**/*'],
+                        dest: '.tmp/public/linker/images'
+                    },
                     { '.tmp/public/linker/js/jquery.js': './bower_components/jquery/dist/jquery.js' },
-                    { '.tmp/public/linker/js/bootstrap.js': './bower_components/bootstrap/dist/js/bootstrap.js' }
+                    { '.tmp/public/linker/js/bootstrap.js': './bower_components/bootstrap/dist/js/bootstrap.js' },
+                    { '.tmp/public/linker/js/jquery.dataTables.js': './bower_components/datatables/media/js/jquery.dataTables.js' },
+                    { '.tmp/public/linker/styles/jquery.dataTables.css': './bower_components/datatables/media/css/jquery.dataTables.css' }
                 ]
             },
             build: {
