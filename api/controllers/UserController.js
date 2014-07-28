@@ -26,8 +26,21 @@ module.exports = {
      */
     _config: {},
 
-    index: function(req, res){
+    index: function (req, res) {
         return res.view();
-    }
+    },
 
+    all: function (req, res) {
+        res.json({
+            draw: req.param('draw'),
+            recordsTotal: 1,
+            recordsFiltered: 1,
+            data: [
+                { nickName: 'jim',
+                  email: 'jim@mail.com',
+                  createdAt: '2014-07-28'
+                }
+            ]
+        });
+    }
 };
