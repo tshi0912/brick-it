@@ -36,7 +36,11 @@ module.exports.routes = {
         view: 'home/index'
     },
 
-    'get /users': 'UserController.all'
+    'get /users': 'UserController.all',
+
+    'post /users': 'UserController.create',
+
+    'get /users/edit': 'UserController.edit'
 
     /*
      // But what if you want your home page to display

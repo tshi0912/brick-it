@@ -42,5 +42,13 @@ module.exports = {
                 }
             ]
         });
+    },
+
+    edit : function(req, res){
+        return res.view();
+    },
+
+    create: function(req, res){
+        res.redirect('/');
     }
 };
