@@ -33,38 +33,49 @@ module.exports = {
     all: function (req, res) {
         var orders = req.param('order') || [];
         var columns = req.param('columns');
-        var sort = '';
+        var sort = '', length = parseInt(req.param('length')) || 10;
 
         for(var i=0; i<orders.length; i++){
             var c = orders[i]['column'];
-            sort += columns[c]['data'] + ' ' + orders[i]['dir'].toUpperCase();
+            sort += columns[c]['data'] + ' ' + orders[i]['dir'];
             if(i != orders.length -1){
                 sort += ',';
             }
         }
 
-        console.log('sort = ' + sort);
+        console.log('sort=' + sort + ', limit=' + length);
 
-        User.find()
-            .sort(sort)
-            .limit(req.param('length'))
-            .skip(req.param('start'))
-            .exec(function(err, users){
-                // Error handling
-                if (err) {
-                    return console.log(err);
-                }
-                // The Users was found out successfully
-                else {
-                    console.log("Find total ", users.length + ' users.');
-                    res.json({
-                        draw: req.param('draw'),
-                        recordsTotal: users.length,
-                        recordsFiltered: users.length,
-                        data: users
+        User.count(function(err, counts){
+            // Error handling
+            if (err) {
+                return console.log(err);
+            }
+            // The Users was found out successfully
+            else {
+                User.find()
+                    .sort(sort)
+                    .skip(req.param('start'))
+                    .limit(length)
+                    .exec(function (err, users) {
+                        // Error handling
+                        if (err) {
+                            return console.log(err);
+                        }
+                        // The Users was found out successfully
+                        else {
+                            console.log("Find total ", users.length + ' users.');
+                            res.json({
+                                draw: req.param('draw'),
+                                recordsTotal: counts,
+                                recordsFiltered: counts,
+                                data: users
+                            });
+                        }
                     });
-                }
-            });
+            }
+        })
+
+
     },
 
     edit : function(req, res){
