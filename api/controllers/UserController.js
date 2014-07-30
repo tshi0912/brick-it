@@ -31,17 +31,40 @@ module.exports = {
     },
 
     all: function (req, res) {
-        res.json({
-            draw: req.param('draw'),
-            recordsTotal: 1,
-            recordsFiltered: 1,
-            data: [
-                { nickName: 'jim',
-                  email: 'jim@mail.com',
-                  createdAt: '2014-07-28'
+        var orders = req.param('order') || [];
+        var columns = req.param('columns');
+        var sort = '';
+
+        for(var i=0; i<orders.length; i++){
+            var c = orders[i]['column'];
+            sort += columns[c]['data'] + ' ' + orders[i]['dir'].toUpperCase();
+            if(i != orders.length -1){
+                sort += ',';
+            }
+        }
+
+        console.log('sort = ' + sort);
+
+        User.find()
+            .sort(sort)
+            .limit(req.param('length'))
+            .skip(req.param('start'))
+            .exec(function(err, users){
+                // Error handling
+                if (err) {
+                    return console.log(err);
                 }
-            ]
-        });
+                // The Users was found out successfully
+                else {
+                    console.log("Find total ", users.length + ' users.');
+                    res.json({
+                        draw: req.param('draw'),
+                        recordsTotal: users.length,
+                        recordsFiltered: users.length,
+                        data: users
+                    });
+                }
+            });
     },
 
     edit : function(req, res){
@@ -49,6 +72,21 @@ module.exports = {
     },
 
     create: function(req, res){
+        User.create({
+            nickName: req.param('nickName'),
+            email: req.param('email'),
+            password: req.param('password'),
+            createdAt: new Date()
+        }).done(function(err, user){
+            // Error handling
+            if (err) {
+                return console.log(err);
+            }
+            // The User was created successfully
+            else {
+                console.log("User created:", user);
+            }
+        });
         res.redirect('/');
     }
 };

@@ -15,17 +15,20 @@ module.exports = {
          */
         nickName: {
             type: 'string',
-            required: true
+            required: true,
+            unique: true
         },
 
         email: {
             type: 'email',
-            required: true
+            required: true,
+            unique: true
         },
 
         password: {
             type: 'string',
-            required: true
+            required: true,
+            minLength: 6
         },
 
         createdAt: {
