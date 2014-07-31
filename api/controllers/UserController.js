@@ -33,7 +33,7 @@ module.exports = {
     all: function (req, res) {
         var orders = req.param('order') || [];
         var columns = req.param('columns');
-        var sort = '', length = parseInt(req.param('length')) || 10;
+        var sort = '', length = parseInt(req.query['length']);
 
         for(var i=0; i<orders.length; i++){
             var c = orders[i]['column'];
