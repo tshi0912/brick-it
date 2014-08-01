@@ -28,7 +28,10 @@ module.exports = function (grunt) {
      */
 
     var cssFilesToInject = [
-        'linker/**/*.css'
+        'linker/styles/bootstrap.css',
+        'linker/styles/font-awesome.css',
+        'linker/styles/common.css',
+        'linker/styles/dataTables.bootstrap.css'
     ];
 
 
@@ -44,6 +47,7 @@ module.exports = function (grunt) {
         'linker/js/jquery.js',
         'linker/js/bootstrap.js',
         'linker/js/jquery.dataTables.js',
+        'linker/js/dataTables.bootstrap.js',
         'linker/js/socket.io.js',
         'linker/js/sails.io.js',
         'linker/js/app.js',
@@ -131,7 +135,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: './assets',
-                        src: ['**/*.!(coffee)'],
+                        src: ['**/*.!(coffee|less)'],
                         dest: '.tmp/public'
                     },
                     {
