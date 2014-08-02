@@ -51,7 +51,8 @@ module.exports = function (grunt) {
         'linker/js/socket.io.js',
         'linker/js/sails.io.js',
         'linker/js/app.js',
-        'linker/js/users.js'
+        'linker/js/users.js',
+        'linker/js/bricks.js'
     ];
 
 

@@ -40,7 +40,15 @@ module.exports.routes = {
 
     'post /users': 'UserController.create',
 
-    'get /users/edit': 'UserController.edit'
+    'get /users/edit': 'UserController.edit',
+
+    'get /brick': 'BrickController.index',
+
+    'get /bricks': 'BrickController.all',
+
+    'post /bricks': 'BrickController.create',
+
+    'get /bricks/edit': 'BrickController.edit'
 
     /*
      // But what if you want your home page to display
