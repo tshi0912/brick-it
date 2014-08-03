@@ -40,6 +40,12 @@ module.exports.routes = {
         view: 'home/signup'
     },
 
+    '/signin': {
+        view: 'home/signin'
+    },
+
+    'post /signin': 'UserController.signin',
+
     'get /users': 'UserController.all',
 
     'post /users': 'UserController.create',

@@ -30,22 +30,44 @@ module.exports = {
         return res.view();
     },
 
+    signin: function (req, res) {
+        User.findOne({
+            nickName: req.param('nickName'),
+            password: req.param('password')
+        }).done(function (err, user) {
+            // Error handling
+            if (err) {
+                return console.log(err);
+            }
+            // The Users was found out successfully
+            else {
+                if(!user){
+                    return res.render('/home/signin',{
+                        errors: ['Nick name or password is incorrect.']
+                    });
+                }else{
+                    return res.redirect('/');
+                }
+            }
+        });
+    },
+
     all: function (req, res) {
         var orders = req.param('order') || [];
         var columns = req.param('columns');
         var sort = '', length = parseInt(req.query['length']);
 
-        for(var i=0; i<orders.length; i++){
+        for (var i = 0; i < orders.length; i++) {
             var c = orders[i]['column'];
             sort += columns[c]['data'] + ' ' + orders[i]['dir'];
-            if(i != orders.length -1){
+            if (i != orders.length - 1) {
                 sort += ',';
             }
         }
 
         console.log('sort=' + sort + ', limit=' + length);
 
-        User.count(function(err, counts){
+        User.count(function (err, counts) {
             // Error handling
             if (err) {
                 return console.log(err);
@@ -78,17 +100,17 @@ module.exports = {
 
     },
 
-    edit : function(req, res){
+    edit: function (req, res) {
         return res.view();
     },
 
-    create: function(req, res){
+    create: function (req, res) {
         User.create({
             nickName: req.param('nickName'),
             email: req.param('email'),
             password: req.param('password'),
             createdAt: new Date()
-        }).done(function(err, user){
+        }).done(function (err, user) {
             // Error handling
             if (err) {
                 return console.log(err);
