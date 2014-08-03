@@ -36,6 +36,10 @@ module.exports.routes = {
         view: 'home/index'
     },
 
+    '/signup': {
+        view: 'home/signup'
+    },
+
     'get /users': 'UserController.all',
 
     'post /users': 'UserController.create',
