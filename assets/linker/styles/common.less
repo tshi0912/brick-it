@@ -1,3 +1,5 @@
+@import "../../../bower_components/bootstrap/less/variables.less";
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -16,6 +18,32 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
+}
+
+.container > .page-header{
+  margin-top: 20px;
+}
+.stats-container .well{
+
+  &.bg-primary {
+    background-color: @brand-primary;
+  }
+  &.bg-warning{
+    background-color: @brand-warning;
+  }
+
+  border: none;
+  color: #fff;
+
+  > h1{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  a {
+    color: #fff;
+  }
+
 }
 
 .footer > .container {

@@ -32,6 +32,24 @@ module.exports = {
         });
     },
 
+    dashboard: function (req, res) {
+        var nickName = req.param('nickName');
+        User.findOne({
+            nickName: req.param('nickName')
+        }).done(function (err, user) {
+            // Error handling
+            if (err) {
+                return console.log(err);
+            }
+            // The Users was found out successfully
+            else {
+               res.view({
+                   user: user
+               });
+            }
+        });
+    },
+
     signin: function (req, res) {
         User.findOne({
             nickName: req.param('nickName'),
@@ -43,23 +61,23 @@ module.exports = {
             }
             // The Users was found out successfully
             else {
-                if(!user){
-                    res.view('home/signin',{
+                if (!user) {
+                    res.view('home/signin', {
                         errors: ['Nick name or password is incorrect.']
                     });
-                }else{
+                } else {
                     req.session.authenticated = true;
                     req.session.user = user;
-                    if(user.nickName === 'jim'){
+                    if (user.nickName === 'jim') {
                         req.session.admin = true;
                     }
-                    res.redirect('/');
+                    res.redirect('/me');
                 }
             }
         });
     },
 
-    signout: function(req, res){
+    signout: function (req, res) {
         delete req.session.authenticated;
         delete req.session.user;
         delete req.session.admin;

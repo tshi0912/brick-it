@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <% if (typeof session.user != 'undefined') { %>
-                <a class="navbar-brand" href="/<%= session.user.nickName %>">Brick IT</a>
+                <a class="navbar-brand" href="/me">Brick IT</a>
             <% } else { %>
                 <a class="navbar-brand" href="/">Brick IT</a>
             <% }%>
