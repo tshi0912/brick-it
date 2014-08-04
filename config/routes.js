@@ -44,6 +44,8 @@ module.exports.routes = {
         view: 'home/signin'
     },
 
+    'get /signout': 'UserController.signout',
+
     'post /signin': 'UserController.signin',
 
     'get /user': 'UserController.index',

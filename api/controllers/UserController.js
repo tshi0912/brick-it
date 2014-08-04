@@ -48,10 +48,22 @@ module.exports = {
                         errors: ['Nick name or password is incorrect.']
                     });
                 }else{
+                    req.session.authenticated = true;
+                    req.session.user = user;
+                    if(user.nickName === 'jim'){
+                        req.session.admin = true;
+                    }
                     res.redirect('/');
                 }
             }
         });
+    },
+
+    signout: function(req, res){
+        delete req.session.authenticated;
+        delete req.session.user;
+        delete req.session.admin;
+        res.redirect('/signin');
     },
 
     all: function (req, res) {

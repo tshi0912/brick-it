@@ -11,10 +11,24 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li data-item="users"><a href="/user">Users</a></li>
-                <li data-item="bricks"><a href="/brick">Bricks</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Help</a></li>
+                <% if (typeof session.admin != 'undefined') { %>
+                    <li data-item="users"><a href="/user">Users</a></li>
+                    <li data-item="bricks"><a href="/brick">Bricks</a></li>
+                <% } %>
+                <% if (typeof session.user != 'undefined') { %>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <%= session.user.nickName %>
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="">My Profile</a></li>
+                            <li><a href="">My Applications</a></li>
+                            <li><a href="">My Bricks</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/signout">Sign Out</a></li>
+                        </ul>
+                    </li>
+                <% } %>
             </ul>
         </div>
     </div>
@@ -24,7 +38,7 @@
         <% if(typeof navItem != 'undefined') {%>
         var nav_item = '<%= navItem %>';
         $('.navbar-right li').each(function () {
-            if($(this).data('item') == nav_item) {
+            if ($(this).data('item') == nav_item) {
                 $(this).addClass('active');
             }
         });
