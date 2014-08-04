@@ -7,7 +7,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Brick IT</a>
+            <% if (typeof session.user != 'undefined') { %>
+                <a class="navbar-brand" href="/<%= session.user.nickName %>">Brick IT</a>
+            <% } else { %>
+                <a class="navbar-brand" href="/">Brick IT</a>
+            <% }%>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
