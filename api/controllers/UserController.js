@@ -42,11 +42,11 @@ module.exports = {
             // The Users was found out successfully
             else {
                 if(!user){
-                    return res.render('/home/signin',{
+                    res.view('home/signin',{
                         errors: ['Nick name or password is incorrect.']
                     });
                 }else{
-                    return res.redirect('/');
+                    res.redirect('/');
                 }
             }
         });

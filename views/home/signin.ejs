@@ -2,15 +2,15 @@
     <div class="panel panel-default">
         <div class="panel-heading">Sign In</div>
         <div class="panel-body">
-            <% if(errors && errors.length != 0) { %>
+            <% if( typeof errors != 'undefined' && errors.length != 0) { %>
             <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                            class="sr-only">Close</span></button>
                 <ul>
                     <% for(var i = 0; i < errors.length; i++) { %>
                     <li><%= errors[i] %></li>
                     <% } %>
                 </ul>
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
-                            class="sr-only">Close</span></button>
             </div>
             <% } %>
             <form class="form-horizontal" role="form" action="/signin" method="post">
