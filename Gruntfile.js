@@ -44,7 +44,6 @@ module.exports = function (grunt) {
      */
 
     var jsFilesToInject = [
-        'linker/js/jquery.js',
         'linker/js/bootstrap.js',
         'linker/js/jquery.dataTables.js',
         'linker/js/dataTables.bootstrap.js',

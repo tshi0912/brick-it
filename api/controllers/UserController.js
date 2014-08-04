@@ -27,7 +27,9 @@ module.exports = {
     _config: {},
 
     index: function (req, res) {
-        return res.view();
+        return res.view({
+            navItem: 'users'
+        });
     },
 
     signin: function (req, res) {
@@ -101,7 +103,9 @@ module.exports = {
     },
 
     edit: function (req, res) {
-        return res.view();
+        return res.view({
+            navItem: 'users'
+        });
     },
 
     create: function (req, res) {

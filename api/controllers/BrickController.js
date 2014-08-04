@@ -27,7 +27,9 @@ module.exports = {
     _config: {},
 
     index: function (req, res) {
-        return res.view();
+        return res.view({
+            navItem: 'bricks'
+        });
     },
 
     all: function (req, res) {
@@ -79,7 +81,9 @@ module.exports = {
     },
 
     edit : function(req, res){
-        return res.view();
+        return res.view({
+            navItem: 'bricks'
+        });
     },
 
     create: function(req, res){

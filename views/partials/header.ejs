@@ -11,11 +11,23 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="/user">Users</a></li>
-                <li><a href="/brick">Bricks</a></li>
+                <li data-item="users"><a href="/user">Users</a></li>
+                <li data-item="bricks"><a href="/brick">Bricks</a></li>
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Help</a></li>
             </ul>
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        <% if(typeof navItem != 'undefined') {%>
+        var nav_item = '<%= navItem %>';
+        $('.navbar-right li').each(function () {
+            if($(this).data('item') == nav_item) {
+                $(this).addClass('active');
+            }
+        });
+        <% } %>
+    });
+</script>
