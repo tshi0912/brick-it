@@ -52,6 +52,12 @@ module.exports.routes = {
 
     'get /user': 'UserController.index',
 
+    'get /user/:nickName/bricks': 'UserController.myBricks',
+
+    'get /user/:nickName/apps': 'UserController.myApps',
+
+    'get /user/:nickName/requests': 'UserController.myRequests',
+
     'get /users': 'UserController.all',
 
     'post /users': 'UserController.create',

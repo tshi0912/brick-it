@@ -50,6 +50,18 @@ module.exports = {
         });
     },
 
+    myBricks: function(req, res){
+        return res.view();
+    },
+
+    myRequests: function(req, res){
+        return res.view();
+    },
+
+    myApps: function(req, res){
+        return res.view();
+    },
+
     signin: function (req, res) {
         User.findOne({
             nickName: req.param('nickName'),

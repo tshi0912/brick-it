@@ -25,9 +25,9 @@
                             <%= session.user.nickName %>
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/user/<%= session.user.nickName %>">My Profile</a></li>
-                            <li><a href="/user/<%= session.user.nickName %>/apps">My Applications</a></li>
                             <li><a href="/user/<%= session.user.nickName %>/bricks">My Bricks</a></li>
+                            <li><a href="/user/<%= session.user.nickName %>/apps">My Apps</a></li>
+                            <li><a href="/user/<%= session.user.nickName %>/requests">My Requests</a></li>
                             <li class="divider"></li>
                             <li><a href="/signout">Sign Out</a></li>
                         </ul>

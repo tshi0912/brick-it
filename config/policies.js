@@ -28,8 +28,11 @@ module.exports.policies = {
 
         signin: true,
 
-        index: ['isAdmin']
+        index: ['isAdmin'],
 
+        myBricks: ['isMine'],
+
+        myApps: ['isMine']
     },
 
     BrickController: {
