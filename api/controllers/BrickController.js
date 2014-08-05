@@ -90,6 +90,7 @@ module.exports = {
         Brick.create({
             title: req.param('title'),
             content: req.param('content'),
+            targetOwner: 'jim',
             createdByNickName: req.param('createdByNickName'),
             createdByEmail: req.param('createdByEmail'),
             createdAt: new Date()

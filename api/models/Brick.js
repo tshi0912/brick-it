@@ -24,6 +24,16 @@ module.exports = {
             required: true
         },
 
+        app: {
+            type: 'text',
+            required: true
+        },
+
+        targetOwner: {
+            type: 'string',
+            required: true
+        },
+
         createdByEmail: {
             // Special types are allowed, they are used in validations and
             // set as a string when passed to an adapter
@@ -34,7 +44,8 @@ module.exports = {
         createdByNickName: {
             // Special types are allowed, they are used in validations and
             // set as a string when passed to an adapter
-            type: 'string'
+            type: 'string',
+            required: true
         },
 
         createdAt: {

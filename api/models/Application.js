@@ -26,6 +26,11 @@ module.exports = {
         key: {
             type: 'string',
             required: true
+        },
+
+        owner: {
+            type: 'string',
+            required: true
         }
 
     }

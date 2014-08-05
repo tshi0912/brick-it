@@ -15,6 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var Q = require('q');
+
 module.exports = {
 
 
@@ -33,20 +35,22 @@ module.exports = {
     },
 
     dashboard: function (req, res) {
-        var nickName = req.param('nickName');
-        User.findOne({
-            nickName: req.param('nickName')
-        }).done(function (err, user) {
-            // Error handling
-            if (err) {
-                return console.log(err);
-            }
-            // The Users was found out successfully
-            else {
-               res.view({
-                   user: user
-               });
-            }
+        var nickName = req.session.user.nickName;
+
+        Q.all([User.findOne({
+                nickName: nickName
+            }), Application.count({
+                owner: nickName
+            }), Brick.count({
+                targetOwner: nickName
+            }), Brick.count({
+                createdByNickName: nickName
+            })]).done(function(results){
+            return res.view({
+                appCount: results[1],
+                brickCount: results[2],
+                requestCount: results[3]
+            });
         });
     },
 
