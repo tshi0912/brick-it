@@ -55,15 +55,21 @@ module.exports = {
     },
 
     myBricks: function(req, res){
-        return res.view();
+        return res.view({
+            nickName: req.param('nickName')
+        });
     },
 
     myRequests: function(req, res){
-        return res.view();
+        return res.view({
+            nickName: req.param('nickName')
+        });
     },
 
     myApps: function(req, res){
-        return res.view();
+        return res.view({
+            nickName: req.param('nickName')
+        });
     },
 
     signin: function (req, res) {

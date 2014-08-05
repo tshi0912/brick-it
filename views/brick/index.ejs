@@ -4,7 +4,7 @@
             <h5>All Bricks</h5>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="/bricks/edit"><i class="fa fa-plus"></i> Create Brick</a>
+            <a class="btn btn-primary" href="/bricks/edit"><i class="fa fa-plus"></i> Create Brick Request</a>
         </div>
     </div>
     <table id="bricks-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -18,3 +18,30 @@
         </thead>
     </table>
 </div>
+<script>
+    $(function () {
+        $('#bricks-table').dataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "/bricks",
+                "type": "GET"
+            },
+            order: [
+                [3, 'desc']
+            ],
+            "columns": [
+                {
+                    render: function(data, type, row){
+                        return '<label><input type="checkbox"></label>';
+                    },
+                    orderable: false,
+                    className: 'check'
+                },
+                { "data": "title" },
+                { "data": "createdByEmail" },
+                { "data": "createdAt" }
+            ]
+        });
+    });
+</script>

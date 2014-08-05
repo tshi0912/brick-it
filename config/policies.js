@@ -28,16 +28,16 @@ module.exports.policies = {
 
         signin: true,
 
-        index: ['isAdmin'],
+        index: ['isAuthenticated','isAdmin'],
 
-        myBricks: ['isMine'],
+        myBricks: ['isAuthenticated','isMine'],
 
-        myApps: ['isMine']
+        myApps: ['isAuthenticated','isMine']
     },
 
     BrickController: {
 
-        index: ['isAdmin']
+        index: ['isAuthenticated','isAdmin']
 
     }
 
