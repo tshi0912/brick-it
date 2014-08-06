@@ -18,16 +18,21 @@
 <script>
     $(function () {
         $('#bricks-table').dataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "/datatables/bricks?prop=targetOwner&value=<%= nickName %>",
-                "type": "POST"
+            processing : true,
+            serverSide : true,
+            ajax : {
+                url : "/datatables/bricks",
+                type : "POST",
+                data: {
+                    where : {
+                        targetOwner: '<%= nickName %>'
+                    }
+                }
             },
             order: [
                 [3, 'desc']
             ],
-            "columns": [
+            columns : [
                 {
                     render: function(data, type, row){
                         return '<label><input type="checkbox"></label>';
@@ -35,9 +40,9 @@
                     orderable: false,
                     className: 'check'
                 },
-                { "data": "title" },
-                { "data": "content" },
-                { "data": "createdAt" }
+                { data : "title" },
+                { data : "content" },
+                { data : "createdAt" }
             ]
         });
     });

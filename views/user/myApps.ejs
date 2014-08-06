@@ -18,16 +18,21 @@
 <script>
     $(function () {
         $('#apps-table').dataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "/datatables/apps?prop=owner&value=<%= nickName %>",
-                "type": "POST"
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url : "/datatables/apps",
+                type : "POST",
+                data : {
+                    where : {
+                        owner : '<%= nickName %>'
+                    }
+                }
             },
             order: [
                 [3, 'desc']
             ],
-            "columns": [
+            columns: [
                 {
                     render: function(data, type, row){
                         return '<label><input type="checkbox"></label>';
@@ -35,9 +40,9 @@
                     orderable: false,
                     className: 'check'
                 },
-                { "data": "name" },
-                { "data": "key" },
-                { "data": "createdAt" }
+                { data : "name" },
+                { data : "key" },
+                { data : "createdAt" }
             ]
         });
     });

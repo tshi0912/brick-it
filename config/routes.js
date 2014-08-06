@@ -72,11 +72,7 @@ module.exports.routes = {
 
     'get /bricks/edit': 'BrickController.edit',
 
-    'post /datatables/users': 'UserController.queryBySingleProp',
-
-    'post /datatables/bricks': 'BrickController.queryBySingleProp',
-
-    'post /datatables/apps': 'AppController.queryBySingleProp'
+    'post /datatables/:model': 'DataTablesController.query'
 
     /*
      // But what if you want your home page to display
