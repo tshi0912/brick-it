@@ -122,7 +122,7 @@ module.exports = {
             sort[columns[c]['data']] = orders[i]['dir'] === 'asc' ? 1 : 0;
         }
 
-        where[prop] = value;
+        prop && value && (where[prop] = value);
 
         console.log('sort=' + sort + ', limit=' + length + ', where=' + where);
 

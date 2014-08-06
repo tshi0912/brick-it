@@ -21,8 +21,8 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "/bricks?targetOwner=<%= nickName %>",
-                "type": "GET"
+                "url": "/datatables/bricks?prop=targetOwner&value=<%= nickName %>",
+                "type": "POST"
             },
             order: [
                 [3, 'desc']

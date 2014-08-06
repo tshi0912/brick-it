@@ -24,8 +24,8 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "/bricks?createdByNickName=<%= nickName %>",
-                "type": "GET"
+                "url": "/datatables/bricks?prop=createdByNickName&value=<%= nickName %>",
+                "type": "POST"
             },
             order: [
                 [3, 'desc']

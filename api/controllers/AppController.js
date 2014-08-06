@@ -20,8 +20,6 @@ var Q = require('q');
 module.exports = {
 
 
-
-
     /**
      * Overrides for the settings in `config/controllers.js`
      * (specific to ApplicationController)
@@ -41,13 +39,13 @@ module.exports = {
             sort[columns[c]['data']] = orders[i]['dir'] === 'asc' ? 1 : 0;
         }
 
-        where[prop] = value;
+        prop && value && (where[prop] = value);
 
         console.log('sort=' + sort + ', limit=' + length + ', where=' + where);
 
         Q.all([
-            Application.count(where),
-            Application.find({
+            App.count(where),
+            App.find({
                 where: where,
                 sort: sort,
                 skip: req.param('start'),

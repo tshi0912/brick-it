@@ -21,8 +21,8 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "/apps?owner=<%= nickName %>",
-                "type": "GET"
+                "url": "/datatables/apps?prop=owner&value=<%= nickName %>",
+                "type": "POST"
             },
             order: [
                 [3, 'desc']
