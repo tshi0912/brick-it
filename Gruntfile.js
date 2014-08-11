@@ -151,7 +151,8 @@ module.exports = function (grunt) {
                     { '.tmp/public/linker/js/jquery.js': './bower_components/jquery/dist/jquery.js' },
                     { '.tmp/public/linker/js/bootstrap.js': './bower_components/bootstrap/dist/js/bootstrap.js' },
                     { '.tmp/public/linker/js/jquery.dataTables.js': './bower_components/datatables/media/js/jquery.dataTables.js' },
-                    { '.tmp/public/linker/styles/jquery.dataTables.css': './bower_components/datatables/media/css/jquery.dataTables.css' }
+                    { '.tmp/public/linker/styles/jquery.dataTables.css': './bower_components/datatables/media/css/jquery.dataTables.css' },
+                    { '.tmp/public/linker/js/echarts-plain.js': './bower_components/e-charts/build/echarts-plain.js' }
                 ]
             },
             build: {
