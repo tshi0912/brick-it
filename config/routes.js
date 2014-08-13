@@ -46,6 +46,8 @@ module.exports.routes = {
 
     '/me': 'UserController.dashboard',
 
+    '/uptoken': 'StorageController.uptoken',
+
     'get /signout': 'UserController.signout',
 
     'post /signin': 'UserController.signin',
