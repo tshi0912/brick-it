@@ -22,6 +22,7 @@
     "font-awesome": "~4.1.0",
     "datatables": "~1.10.1",
     "morrisjs": "0.4.3",
-    "e-charts": "~2.0.1"
+    "e-charts": "~2.0.1",
+    "jasny-bootstrap": "~3.1.3"
   }
 }
