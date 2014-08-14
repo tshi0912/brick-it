@@ -29,6 +29,7 @@ module.exports = function (grunt) {
 
     var cssFilesToInject = [
         'linker/styles/bootstrap.css',
+        'linker/styles/jasny-bootstrap.css',
         'linker/styles/font-awesome.css',
         'linker/styles/common.css',
         'linker/styles/dataTables.bootstrap.css'
@@ -45,6 +46,7 @@ module.exports = function (grunt) {
 
     var jsFilesToInject = [
         'linker/js/bootstrap.js',
+        'linker/js/jasny-bootstrap.js',
         'linker/js/jquery.dataTables.js',
         'linker/js/dataTables.bootstrap.js',
         'linker/js/socket.io.js',
@@ -155,7 +157,8 @@ module.exports = function (grunt) {
                     { '.tmp/public/linker/js/jquery.dataTables.js': './bower_components/datatables/media/js/jquery.dataTables.js' },
                     { '.tmp/public/linker/styles/jquery.dataTables.css': './bower_components/datatables/media/css/jquery.dataTables.css' },
                     { '.tmp/public/linker/js/echarts-plain.js': './bower_components/e-charts/build/echarts-plain.js' },
-                    { '.tmp/public/linker/js/plupload.full.min.js': './bower_components/plupload/js/plupload.full.min.js' },
+                    { '.tmp/public/linker/js/plupload/plupload.full.min.js': './bower_components/plupload/js/plupload.full.min.js' },
+                    { '.tmp/public/linker/js/plupload/Moxie.swf': './bower_components/plupload/js/Moxie.swf' },
                     { '.tmp/public/linker/js/qiniu.js': './bower_components/qiniu-js-sdk/src/qiniu.js' }
                 ]
             },

@@ -1,4 +1,4 @@
-<div class="container">
+<div id="content-area" class="container">
     <div class="panel panel-default">
         <div class="panel-heading">Create Brick Request</div>
         <div class="panel-body">
@@ -40,6 +40,25 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                <img data-src="holder.js/100%x100%" alt="100%x100%">
+                            </div>
+                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                            <div>
+                                <span class="btn btn-default btn-file">
+                                    <span class="fileinput-new">Select image</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input id="file-input" type="file" name="screenShot">
+                                </span>
+                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                <a href="javascript:void(0);" id="upload-btn" class="btn btn-default fileinput-exists">Upload</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Create</button>
                     </div>
                 </div>
@@ -47,10 +66,65 @@
         </div>
     </div>
 </div>
-<script src="/linker/js/plupload.all.min.js" />
-<script src="/linker/js/qiniu.js" />
+<script src="/linker/js/plupload/plupload.full.min.js"></script>
+<script src="/linker/js/qiniu.js"></script>
 <script>
     $(function(){
+        $('.fileinput').fileinput();
 
+        var uploader = Qiniu.uploader({
+            runtimes: 'html5,flash,html4',
+            browse_button: 'file-input',
+            container: 'fileinput',
+            drop_element: 'fileinput',
+            max_file_size: '100mb',
+            flash_swf_url: '/linker/js/plupload/Moxie.swf',
+            dragdrop: true,
+            chunk_size: '4mb',
+            uptoken_url: '/uptoken',
+            domain: 'http://brickit.qiniudn.com/',
+            // downtoken_url: '/downtoken',
+            // unique_names: true,
+            // save_key: true,
+            // x_vars: {
+            //     'id': '1234',
+            //     'time': function(up, file) {
+            //         var time = (new Date()).getTime();
+            //         // do something with 'time'
+            //         return time;
+            //     },
+            // },
+            auto_start: false,
+            init: {
+                'FilesAdded': function(up, files) {
+                   console.log('file added');
+                },
+                'BeforeUpload': function(up, file) {
+                    console.log('before file upload');
+                },
+                'UploadProgress': function(up, file) {
+                    console.log('uploading ' + file.percent + "%");
+                },
+                'UploadComplete': function() {
+                    console.log('upload completed');
+                },
+                'FileUploaded': function(up, file, info) {
+                    console.log('file uploaded');
+                },
+                'Error': function(up, err, errTip) {
+                    console.error(err);
+                }
+                // ,
+                // 'Key': function(up, file) {
+                //     var key = "";
+                //     // do something with key
+                //     return key
+                // }
+            }
+        });
+
+        $('#content-area').on('click','#upload-btn',function(){
+            uploader.start();
+        });
     });
 </script>
