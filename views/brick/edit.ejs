@@ -66,7 +66,7 @@
         </div>
     </div>
 </div>
-<script src="/linker/js/plupload/plupload.full.min.js"></script>
+<script src="/linker/js/plupload/plupload.js"></script>
 <script src="/linker/js/qiniu.js"></script>
 <script>
     $(function(){
@@ -79,7 +79,7 @@
             drop_element: 'fileinput',
             max_file_size: '100mb',
             flash_swf_url: '/linker/js/plupload/Moxie.swf',
-            dragdrop: true,
+            dragdrop: false,
             chunk_size: '4mb',
             uptoken_url: '/uptoken',
             domain: 'http://brickit.qiniudn.com/',
