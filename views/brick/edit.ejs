@@ -40,21 +40,13 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                <img data-src="holder.js/100%x100%" alt="100%x100%">
-                            </div>
-                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
-                            <div>
-                                <span class="btn btn-default btn-file">
-                                    <span class="fileinput-new">Select image</span>
-                                    <span class="fileinput-exists">Change</span>
-                                    <input id="file-input" type="file" name="screenShot">
-                                </span>
-                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                <a href="javascript:void(0);" id="upload-btn" class="btn btn-default fileinput-exists">Upload</a>
-                            </div>
+                        <div class="upload-box">
+                            <a href="javascript:;" class="thumbnail">
+                                <img data-src="holder.js/200x200" alt="100%x100%">
+                            </a>
+                            <a id="upload-btn" class="btn btn-lg btn-upload" href="javascript:;"><i class="fa fa-plus"></i></a>
                         </div>
+                        <input type="hidden" name="screenShots" id="screen-shots-input">
                     </div>
                 </div>
                 <div class="form-group">
@@ -70,13 +62,13 @@
 <script src="/linker/js/qiniu.js"></script>
 <script>
     $(function(){
-        $('.fileinput').fileinput();
+//        $('.fileinput').fileinput();
 
         var uploader = Qiniu.uploader({
             runtimes: 'html5,flash,html4',
-            browse_button: 'file-input',
-            container: 'fileinput',
-            drop_element: 'fileinput',
+            browse_button: 'upload-btn',
+//            container: 'fileinput',
+//            drop_element: 'fileinput',
             max_file_size: '100mb',
             flash_swf_url: '/linker/js/plupload/Moxie.swf',
             dragdrop: false,
@@ -94,7 +86,7 @@
             //         return time;
             //     },
             // },
-            auto_start: false,
+            auto_start: true,
             init: {
                 'FilesAdded': function(up, files) {
                    console.log('file added');
@@ -110,6 +102,11 @@
                 },
                 'FileUploaded': function(up, file, info) {
                     console.log('file uploaded');
+                    var domain = up.getOption('domain');
+                    var res = JSON.parse(info);
+                    $('#upload-btn').parents('.upload-box').find('.thumbnail img')
+                            .attr('src', domain + res.key)
+                            .css('height', 'auto');
                 },
                 'Error': function(up, err, errTip) {
                     console.error(err);
@@ -123,8 +120,8 @@
             }
         });
 
-        $('#content-area').on('click','#upload-btn',function(){
-            uploader.start();
-        });
+//        $('#content-area').on('click','#upload-btn',function(){
+//            uploader.start();
+//        });
     });
 </script>

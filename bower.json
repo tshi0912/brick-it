@@ -25,6 +25,7 @@
     "e-charts": "~2.0.1",
     "jasny-bootstrap": "~3.1.3",
     "plupload": "~2.1.2",
-    "qiniu-js-sdk": "git@github.com:qiniupd/qiniu-js-sdk.git#~1.0.1-beta"
+    "qiniu-js-sdk": "git@github.com:qiniupd/qiniu-js-sdk.git#~1.0.1-beta",
+    "holderjs": "~2.3.2"
   }
 }

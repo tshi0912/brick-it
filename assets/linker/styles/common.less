@@ -74,3 +74,34 @@ body {
   }
 
 }
+
+.upload-box{
+
+  display: inline-block;
+  position: relative;
+
+  .thumbnail {
+
+    margin-bottom: 0px;
+
+    img{
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  .btn-upload{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -22px;
+    margin-left: -22px;
+    background-color: rgba(0,0,0,0.1);
+    color: #fefefe;
+
+    &:hover{
+      background-color: rgba(0,0,0,0.2);
+      color: #ffffff;
+    }
+  }
+}
