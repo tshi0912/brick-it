@@ -157,7 +157,7 @@ module.exports = function (grunt) {
                     { '.tmp/public/linker/js/jquery.dataTables.js': './bower_components/datatables/media/js/jquery.dataTables.js' },
                     { '.tmp/public/linker/styles/jquery.dataTables.css': './bower_components/datatables/media/css/jquery.dataTables.css' },
                     { '.tmp/public/linker/js/echarts-plain.js': './bower_components/e-charts/build/echarts-plain.js' },
-                    { '.tmp/public/linker/js/plupload/plupload.js': './bower_components/plupload/js/plupload.dev.js' },
+                    { '.tmp/public/linker/js/plupload/plupload.js': './bower_components/plupload/js/plupload.full.min.js' },
                     { '.tmp/public/linker/js/plupload/Moxie.swf': './bower_components/plupload/js/Moxie.swf' },
                     { '.tmp/public/linker/js/qiniu.js': './bower_components/qiniu-js-sdk/src/qiniu.js' }
                 ]
