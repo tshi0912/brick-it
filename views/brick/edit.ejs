@@ -107,6 +107,13 @@
                     $('#upload-btn').parents('.upload-box').find('.thumbnail img')
                             .attr('src', domain + res.key)
                             .css('height', 'auto');
+                    var v = $('input[name="screenShots"]').val();
+                    if($.trim(v)){
+                        v += ',';
+                    }
+                    v += res.key;
+                    $('input[name="screenShots"]').val(v);
+                    console.log('screen shots input : ' + v);
                 },
                 'Error': function(up, err, errTip) {
                     console.error(err);
