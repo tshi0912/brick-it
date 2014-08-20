@@ -50,6 +50,8 @@ module.exports = function (grunt) {
         'linker/js/holder.js',
         'linker/js/jquery.dataTables.js',
         'linker/js/dataTables.bootstrap.js',
+        'linker/js/handlebars.js',
+        'linker/js/handlebars-fix.js',
         'linker/js/socket.io.js',
         'linker/js/sails.io.js',
         'linker/js/app.js'
@@ -161,7 +163,9 @@ module.exports = function (grunt) {
                     { '.tmp/public/linker/js/plupload/plupload.js': './bower_components/plupload/js/plupload.full.min.js' },
                     { '.tmp/public/linker/js/plupload/Moxie.swf': './bower_components/plupload/js/Moxie.swf' },
                     { '.tmp/public/linker/js/qiniu.js': './bower_components/qiniu-js-sdk/src/qiniu.js' },
-                    { '.tmp/public/linker/js/holder.js': './bower_components/holderjs/holder.js' }
+                    { '.tmp/public/linker/js/holder.js': './bower_components/holderjs/holder.js' },
+                    { '.tmp/public/linker/js/underscore.js': './bower_components/underscore/underscore.js' },
+                    { '.tmp/public/linker/js/handlebars.js': './bower_components/handlebars/handlebars.js' }
                 ]
             },
             build: {

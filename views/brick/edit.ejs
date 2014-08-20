@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                    <div id="upload-box-container" class="col-sm-offset-2 col-sm-10">
                         <div class="upload-box">
                             <a href="javascript:;" class="thumbnail">
                                 <img data-src="holder.js/200x200" alt="100%x100%">
@@ -104,16 +104,24 @@
                     console.log('file uploaded');
                     var domain = up.getOption('domain');
                     var res = JSON.parse(info);
-                    $('#upload-btn').parents('.upload-box').find('.thumbnail img')
-                            .attr('src', domain + res.key)
-                            .css('height', 'auto');
-                    var v = $('input[name="screenShots"]').val();
-                    if($.trim(v)){
-                        v += ',';
-                    }
-                    v += res.key;
-                    $('input[name="screenShots"]').val(v);
-                    console.log('screen shots input : ' + v);
+                    Handlebars.getTemplate('upload-box')
+                            .done(function(tmpl){
+                                $('#upload-btn').parents('.upload-box').before(tmpl({
+                                    key: res.key,
+                                    url: domain + res.key
+                                }));
+                                var v = $('input[name="screenShots"]').val();
+                                if($.trim(v)){
+                                    v += ',';
+                                }
+                                v += res.key;
+                                $('input[name="screenShots"]').val(v);
+                                console.log('screen shots input : ' + v);
+                            });
+
+//                    $('#upload-btn').parents('.upload-box').find('.thumbnail img')
+//                            .attr('src', domain + res.key)
+//                            .css('height', 'auto');
                 },
                 'Error': function(up, err, errTip) {
                     console.error(err);
