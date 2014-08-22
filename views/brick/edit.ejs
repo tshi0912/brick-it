@@ -135,6 +135,18 @@
             }
         });
 
+        $('#upload-box-container').on('click','.btn-remove', function(){
+            var $box = $(this).parents('.upload-box'),
+                vs = $('input[name="screenShots"]').val().split(',');
+            var k = $box.data('uploaded-key');
+            vs = _.filter(vs, function(v){
+                return v != k;
+            });
+            console.log('screen shots input : ' + vs);
+            $('input[name="screenShots"]').val(vs.join(','));
+            $box.remove();
+        });
+
 //        $('#content-area').on('click','#upload-btn',function(){
 //            uploader.start();
 //        });

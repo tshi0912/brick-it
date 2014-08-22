@@ -50,6 +50,7 @@ module.exports = function (grunt) {
         'linker/js/holder.js',
         'linker/js/jquery.dataTables.js',
         'linker/js/dataTables.bootstrap.js',
+        'linker/js/underscore.js',
         'linker/js/handlebars.js',
         'linker/js/handlebars-fix.js',
         'linker/js/socket.io.js',
