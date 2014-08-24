@@ -29,6 +29,10 @@ module.exports = {
             required: true
         },
 
+        screenShots: {
+            type: 'array'
+        },
+
         targetOwner: {
             type: 'string',
             required: true
