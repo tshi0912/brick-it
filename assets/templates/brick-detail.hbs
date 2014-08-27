@@ -1,36 +1,61 @@
-<ul class="list-group">
+<ul class="list-group" style="margin-bottom: 0px">
     <a href="#" class="list-group-item active">
         {{title}}
     </a>
     <a href="#" class="list-group-item">
         <div class="row">
-            <div class="col-md-3 text-right">
+            <div class="col-md-2 text-right">
                 <span class="label label-default">App</span>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-10">
                 {{app}}
             </div>
         </div>
     </a>
     <a href="#" class="list-group-item">
-        <span class="label">Created By</span>
-        {{createdByNickName}}
+        <div class="row">
+            <div class="col-md-2 text-right">
+                <span class="label label-default">Created By</span>
+            </div>
+            <div class="col-md-10">
+                {{createdByNickName}}
+            </div>
+        </div>
     </a>
     <a href="#" class="list-group-item">
-        <span class="label">Created At</span>
-        {{createdAt}}
+        <div class="row">
+            <div class="col-md-2 text-right">
+                <span class="label label-default">Created At</span>
+            </div>
+            <div class="col-md-10">
+                {{createdAt}}
+            </div>
+        </div>
     </a>
     <a href="#" class="list-group-item">
-        <span class="label">Content</span>
-        {{content}}
+        <div class="row">
+            <div class="col-md-2 text-right">
+                <span class="label label-default">Content</span>
+            </div>
+            <div class="col-md-10">
+                {{content}}
+            </div>
+        </div>
     </a>
     <li class="list-group-item">
-        {{#each screenShots}}
-            <div class="upload-box">
-                <a href="javascript:;" class="thumbnail">
-                    <img src="http://brickit.qiniudn.com/{{this}}" style="height:auto;">
-                </a>
+        <div class="row">
+            <div class="col-md-2 text-right">
+                <span class="label label-default">Screen shots</span>
             </div>
-        {{/each}}
+            <div class="col-md-10">
+                {{#each screenShots}}
+                    <div class="upload-box">
+                        <a href="javascript:;" class="thumbnail">
+                            <img src="http://brickit.qiniudn.com/{{this}}" style="height:auto;">
+                        </a>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
     </li>
 </ul>
