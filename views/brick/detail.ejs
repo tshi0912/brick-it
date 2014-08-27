@@ -17,7 +17,13 @@
 <script>
     $(function(){
         $('#brick-detail-modal').on('show.bs.modal', function(){
-            var brick = $(this).data('brick');
+            var brick = $(this).data('brick'),
+                    $this = $(this);
+
+            Handlebars.getTemplate('brick-detail')
+                    .done(function(tmpl){
+                        $this.find('.modal-body').html(tmpl(brick));
+                    });
         });
     });
 </script>

@@ -43,9 +43,10 @@
                 { "data": "createdAt" }
             ]
         }).on('click','tr', function(){
-            var brick = bricks_table.row(this).data()
+            var brick = bricks_table.row($(this)).data();
             $('#brick-detail-modal').data('brick', brick)
                     .modal('show');
-        });
+        }).api();
     });
 </script>
+<%- partial('detail') %>
