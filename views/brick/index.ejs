@@ -20,7 +20,7 @@
 </div>
 <script>
     $(function () {
-        $('#bricks-table').dataTable({
+        var bricks_table = $('#bricks-table').dataTable({
             "processing": true,
             "serverSide": true,
             "ajax": {
@@ -42,6 +42,10 @@
                 { "data": "createdByEmail" },
                 { "data": "createdAt" }
             ]
+        }).on('click','tr', function(){
+            var brick = bricks_table.row(this).data()
+            $('#brick-detail-modal').data('brick', brick)
+                    .modal('show');
         });
     });
 </script>
