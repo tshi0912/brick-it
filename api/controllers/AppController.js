@@ -16,6 +16,7 @@
  */
 
 var Q = require('q');
+var uuid = require('node-uuid');
 
 module.exports = {
 
@@ -26,42 +27,35 @@ module.exports = {
      */
     _config: {},
 
-    queryBySingleProp: function (req, res) {
+    index: function (req, res) {
+        return res.view({
+            navItem: 'apps'
+        });
+    },
 
-        var prop = req.param('prop'),
-            value = req.param('value');
-        var orders = req.param('order') || [];
-        var columns = req.param('columns');
-        var sort = {}, length = parseInt(req.query['length']), where = {};
+    edit : function(req, res){
+        return res.view({
+            navItem: 'apps'
+        });
+    },
 
-        for (var i = 0; i < orders.length; i++) {
-            var c = orders[i]['column'];
-            sort[columns[c]['data']] = orders[i]['dir'] === 'asc' ? 1 : 0;
-        }
-
-        prop && value && (where[prop] = value);
-
-        console.log('sort=' + sort + ', limit=' + length + ', where=' + where);
-
-        Q.all([
-            App.count(where),
-            App.find({
-                where: where,
-                sort: sort,
-                skip: req.param('start'),
-                limit: length
-            })
-        ])
-            .done(function (results) {
-                console.log("Find total ", results[1].length + ' apps.');
-                res.json({
-                    draw: req.param('draw'),
-                    recordsTotal: results[0],
-                    recordsFiltered: results[0],
-                    data: results[1]
-                });
-            });
-
+    create: function(req, res){
+        App.create({
+            name: req.param('name'),
+            domain: req.param('domain'),
+            key: uuid.v4(),
+            owner: req.session.user.nickName
+        }).done(function(err, app){
+            // Error handling
+            if (err) {
+                return console.log(err);
+            }
+            // The brick was created successfully
+            else {
+                console.log("app created:", app);
+            }
+        });
+        res.redirect('/app');
     }
 
 };

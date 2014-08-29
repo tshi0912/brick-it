@@ -60,19 +60,21 @@ module.exports.routes = {
 
     'get /user/:nickName/requests': 'UserController.myRequests',
 
-    'get /users': 'UserController.all',
+    'post /user': 'UserController.create',
 
-    'post /users': 'UserController.create',
-
-    'get /users/edit': 'UserController.edit',
+    'get /user/edit': 'UserController.edit',
 
     'get /brick': 'BrickController.index',
 
-    'get /bricks': 'BrickController.all',
+    'post /brick': 'BrickController.create',
 
-    'post /bricks': 'BrickController.create',
+    'get /brick/edit': 'BrickController.edit',
 
-    'get /bricks/edit': 'BrickController.edit',
+    'get /app': 'AppController.index',
+
+    'post /app': 'AppController.create',
+
+    'get /app/edit': 'AppController.edit',
 
     'post /datatables/:model': 'DataTablesController.query'
 

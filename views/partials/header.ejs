@@ -17,6 +17,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <% if (typeof session.admin != 'undefined') { %>
                     <li data-item="users"><a href="/user">Users</a></li>
+                    <li data-item="apps"><a href="/app">Apps</a></li>
                     <li data-item="bricks"><a href="/brick">Bricks</a></li>
                 <% } %>
                 <% if (typeof session.user != 'undefined') { %>

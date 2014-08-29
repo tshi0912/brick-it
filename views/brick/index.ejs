@@ -4,7 +4,7 @@
             <h5>All Bricks</h5>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="/bricks/edit"><i class="fa fa-plus"></i> Create Brick Request</a>
+            <a class="btn btn-primary" href="/brick/edit"><i class="fa fa-plus"></i> Create Brick</a>
         </div>
     </div>
     <table id="bricks-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -42,10 +42,12 @@
                 { "data": "createdByEmail" },
                 { "data": "createdAt" }
             ]
-        }).on('click','tr', function(e){
-            if($(e.target).is('input[type="checkbox"]')){
-                return;
+        }).on('click','td', function(e){
+            if($(this).find('input[type="checkbox"]').length != 0 ||
+                    $(this).hasClass('.dataTables_empty')){
+                e.stopPropagation();
             }
+        }).on('click','tbody > tr', function(e){
             var brick = bricks_table.row($(this)).data();
             $('#brick-detail-modal').data('brick', brick)
                     .modal('show');
