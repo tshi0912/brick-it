@@ -41,26 +41,30 @@ module.exports = {
     },
 
     create: function(req, res){
-        Brick.create({
-            app: req.param('app'),
-            title: req.param('title'),
-            content: req.param('content'),
-            targetOwner: 'jim',
-            screenShots: req.param('screenShots')? req.param('screenShots').split(',') : null,
-            createdByNickName: req.param('createdByNickName'),
-            createdByEmail: req.param('createdByEmail'),
-            createdAt: new Date()
-        }).done(function(err, brick){
-            // Error handling
-            if (err) {
-                return console.log(err);
-            }
-            // The brick was created successfully
-            else {
-                console.log("brick created:", brick);
-            }
-        });
-        res.redirect('/brick');
+        App.findOne()
+            .where({ name: req.param('app') })
+            .then(function(app){
+                Brick.create({
+                    app: req.param('app'),
+                    title: req.param('title'),
+                    content: req.param('content'),
+                    targetOwner: app.owner,
+                    screenShots: req.param('screenShots')? req.param('screenShots').split(',') : null,
+                    createdByNickName: req.param('createdByNickName'),
+                    createdByEmail: req.param('createdByEmail'),
+                    createdAt: new Date()
+                }).done(function(err, brick){
+                    // Error handling
+                    if (err) {
+                        return console.log(err);
+                    }
+                    // The brick was created successfully
+                    else {
+                        console.log("brick created:", brick);
+                    }
+                });
+                res.redirect('/brick');
+            });
     }
 
 };
