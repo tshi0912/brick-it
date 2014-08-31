@@ -11,6 +11,7 @@
         <thead>
         <tr>
             <th></th>
+            <th>App</th>
             <th>Title</th>
             <th>Created By</th>
             <th>Created Date</th>
@@ -28,7 +29,7 @@
                 "type": "POST"
             },
             order: [
-                [3, 'desc']
+                [4, 'desc']
             ],
             "columns": [
                 {
@@ -38,6 +39,7 @@
                     orderable: false,
                     className: 'check'
                 },
+                { "data": "app" },
                 { "data": "title" },
                 { "data": "createdByEmail" },
                 { "data": "createdAt" }
