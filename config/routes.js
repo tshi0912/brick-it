@@ -68,6 +68,8 @@ module.exports.routes = {
 
     'post /brick': 'BrickController.create',
 
+    'delete /brick': 'BrickController.destroy',
+
     'get /brick/edit': 'BrickController.edit',
 
     'get /app': 'AppController.index',

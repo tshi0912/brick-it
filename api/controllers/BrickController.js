@@ -65,6 +65,29 @@ module.exports = {
                 });
                 res.redirect('/brick');
             });
+    },
+
+    destroy : function(req, res){
+        var ids = req.param('ids');
+        Brick.findByIdIn(ids)
+            .then(function(bricks){
+                var ds = []
+                 bricks.forEach(function(brick){
+                     ds.push(Brick.destroy().where({id : brick.id}));
+                 });
+                return Q.allSettled(ds);
+            }).done(function(results){
+                var errors = [];
+                results.forEach(function (result) {
+                    if (result.state !== "fulfilled") {
+                        errors.push(result.reason);
+                    }
+                });
+                res.json({
+                    ok : (errors.length == 0 ? true : false),
+                    errors : errors
+                });
+            });
     }
 
 };

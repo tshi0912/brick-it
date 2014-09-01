@@ -79,7 +79,20 @@
         }).api();
 
         $('.btn-group .btn:first-child').on('click', function(){
-            bricks_table.rows('.selected').remove().draw(false);
+            var selecteds = bricks_table.rows('.selected').data(),
+                ids = [];
+            _.each(selecteds, function(item){
+                ids.push(item.id);
+            });
+            $.ajax({
+                url : '/brick',
+                type: 'delete',
+                data: {ids: ids}
+            }).done(function(result){
+                if(result.ok) {
+                    bricks_table.draw(false);
+                }
+            });
         });
     });
 </script>
