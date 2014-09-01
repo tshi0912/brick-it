@@ -51,9 +51,23 @@
                 { data : "createdAt" }
             ]
         }).on('click','td', function(e){
-            if($(this).find('input[type="checkbox"]').length != 0 ||
-                    $(this).hasClass('.dataTables_empty')){
+            if($(this).hasClass('.dataTables_empty') ||
+                    $(e.target).is('input[type="checkbox"]')){
                 e.stopPropagation();
+            }
+            if($(e.target).is("label")){
+                e.preventDefault();
+                var ele = $(e.target).find('input');
+                if(ele.is(':checked')){
+                    ele.prop('checked', false);
+                }else{
+                    ele.prop('checked', true);
+                }
+                $(this).parents('tr').toggleClass('selected');
+                e.stopPropagation();
+            }
+            if($(e.target).is('input[type="checkbox"]')){
+                $(this).parents('tr').toggleClass('selected');
             }
         }).on('click','tbody > tr', function(e){
             var brick = bricks_table.row($(this)).data();
