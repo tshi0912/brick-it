@@ -33,19 +33,19 @@ module.exports = {
         });
     },
 
-    edit : function(req, res){
+    edit: function (req, res) {
         return res.view({
             navItem: 'apps'
         });
     },
 
-    create: function(req, res){
+    create: function (req, res) {
         App.create({
             name: req.param('name'),
             domain: req.param('domain'),
             key: uuid.v4(),
             owner: req.session.user.nickName
-        }).done(function(err, app){
+        }).done(function (err, app) {
             // Error handling
             if (err) {
                 return console.log(err);
@@ -56,6 +56,26 @@ module.exports = {
             }
         });
         res.redirect('/app');
+    },
+
+    destroy: function (req, res) {
+        var ids = req.param('ids') || [];
+        var ds = [];
+        ids.forEach(function (id) {
+            ds.push(App.destroy().where({id: id}));
+        });
+        Q.allSettled(ds).done(function (results) {
+            var errors = [];
+            results.forEach(function (result) {
+                if (result.state !== "fulfilled") {
+                    errors.push(result.reason);
+                }
+            });
+            res.json({
+                ok: (errors.length == 0 ? true : false),
+                errors: errors
+            });
+        });
     }
 
 };

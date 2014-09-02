@@ -78,6 +78,8 @@ module.exports.routes = {
 
     'get /app/edit': 'AppController.edit',
 
+    'delete /app': 'AppController.destroy',
+
     'post /datatables/:model': 'DataTablesController.query'
 
     /*
