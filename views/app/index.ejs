@@ -4,7 +4,10 @@
             <h5>All Apps</h5>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="/app/edit"><i class="fa fa-plus"></i> Create App</a>
+            <div class="btn-group">
+                <a class="btn btn-default" href="javascript:void(0);"><i class="fa fa-times"></i></a>
+                <a class="btn btn-default" href="/app/edit"><i class="fa fa-plus"></i></a>
+            </div>
         </div>
     </div>
     <table id="apps-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -45,15 +48,46 @@
                 { "data": "createdAt" }
             ]
         }).on('click','td', function(e){
-            if($(this).find('input[type="checkbox"]').length != 0 ||
-                    $(this).hasClass('.dataTables_empty')){
+            if($(this).hasClass('.dataTables_empty') ||
+                    $(e.target).is('input[type="checkbox"]')){
                 e.stopPropagation();
+            }
+            if($(e.target).is("label")){
+                e.preventDefault();
+                var ele = $(e.target).find('input');
+                if(ele.is(':checked')){
+                    ele.prop('checked', false);
+                }else{
+                    ele.prop('checked', true);
+                }
+                $(this).parents('tr').toggleClass('selected');
+                e.stopPropagation();
+            }
+            if($(e.target).is('input[type="checkbox"]')){
+                $(this).parents('tr').toggleClass('selected');
             }
         }).on('click','tbody > tr', function(e){
             var app = apps_table.row($(this)).data();
             $('#app-detail-modal').data('app', app)
                     .modal('show');
         }).api();
+
+        $('.btn-group .btn:first-child').on('click', function(){
+            var selecteds = apps_table.rows('.selected').data(),
+                    ids = [];
+            _.each(selecteds, function(item){
+                ids.push(item.id);
+            });
+            $.ajax({
+                url : '/app',
+                type: 'delete',
+                data: {ids: ids}
+            }).done(function(result){
+                if(result.ok) {
+                    apps_table.draw(false);
+                }
+            });
+        });
     });
 </script>
 <%- partial('detail') %>
