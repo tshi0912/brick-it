@@ -40,7 +40,15 @@ module.exports = {
         });
     },
 
-    create: function(req, res){
+    editFromMyself : function(req, res){
+        return res.view('brick/edit', {
+            navItem: 'bricks',
+            fromMyself: true
+        });
+    },
+
+    _create: function(req, res, createdByNickName,
+                      createdByEmail,completedUrl){
         App.findOne()
             .where({ name: req.param('app') })
             .then(function(app){
@@ -50,8 +58,8 @@ module.exports = {
                     content: req.param('content'),
                     targetOwner: app.owner,
                     screenShots: req.param('screenShots')? req.param('screenShots').split(',') : null,
-                    createdByNickName: req.param('createdByNickName'),
-                    createdByEmail: req.param('createdByEmail'),
+                    createdByNickName: createdByNickName,
+                    createdByEmail: createdByEmail,
                     createdAt: new Date()
                 }).done(function(err, brick){
                     // Error handling
@@ -63,8 +71,20 @@ module.exports = {
                         console.log("brick created:", brick);
                     }
                 });
-                res.redirect('/brick');
+                res.redirect(completedUrl);
             });
+    },
+
+    createFromAdmin: function(req, res){
+        var createdByNickName = req.param('createdByNickName'),
+            createdByEmail = req.param('createdByEmail');
+        _create(req, res, createdByNickName, createdByEmail, '/brick');
+    },
+
+    createFromMyself: function(req, res){
+        var createdByNickName = req.session.user.nickName,
+            createdByEmail = req.session.user.email;
+        _create(req, res, createdByNickName, createdByEmail, '/user/'+createdByNickName+'/requests');
     },
 
     destroy : function(req, res){

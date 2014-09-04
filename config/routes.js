@@ -66,11 +66,15 @@ module.exports.routes = {
 
     'get /brick': 'BrickController.index',
 
-    'post /brick': 'BrickController.create',
+    'post /brick': 'BrickController.createFromAdmin',
+
+    'post /user/:nickName/requests': 'BrickController.createFromMyself',
 
     'delete /brick': 'BrickController.destroy',
 
     'get /brick/edit': 'BrickController.edit',
+
+    'get /user/:nickName/requests/edit': 'BrickController.editFromMyself',
 
     'get /app': 'AppController.index',
 
