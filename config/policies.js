@@ -43,6 +43,8 @@ module.exports.policies = {
 
         '*': ['isAuthenticated','isAdmin'],
 
+        editFromMyself: ['isAuthenticated','isMine'],
+
         _create: ['isAuthenticated'],
 
         createFromMyself: ['isAuthenticated','isMine']
