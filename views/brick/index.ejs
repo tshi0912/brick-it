@@ -48,11 +48,23 @@
                     orderable: false,
                     className: 'check'
                 },
-                { "data": "app" },
+                {
+                    render: function(data, type, row){
+                        return '<a class="app-link" href="javascript:void(0);" >' + row.app + '</a>';
+                    }
+                },
                 { "data": "title" },
                 { "data": "createdByEmail" },
                 { "data": "createdAt" }
             ]
+        }).on('click', '.app-link', function(e){
+            e.stopPropagation();
+            var name = $.trim($(this).text());
+            $.getJSON('/apps/'+name)
+                    .done(function(app){
+                        $('#app-detail-modal').data('app', app)
+                                .modal('show');
+                    });
         }).on('click','td', function(e){
             if($(this).hasClass('.dataTables_empty') ||
                     $(e.target).is('input[type="checkbox"]')){
@@ -97,3 +109,4 @@
     });
 </script>
 <%- partial('detail') %>
+<%- partial('../app/detail') %>

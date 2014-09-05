@@ -52,7 +52,9 @@ module.exports.policies = {
 
     AppController: {
 
-        '*': ['isAuthenticated','isAdmin']
+        '*': ['isAuthenticated','isAdmin'],
+
+        getByName: true
 
     }
 

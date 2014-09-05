@@ -39,6 +39,20 @@ module.exports = {
         });
     },
 
+    getByName: function(req, res){
+        App.findOneByName(req.param('name'))
+            .done(function(err, app){
+                // Error handling
+                if (err) {
+                    return console.log(err);
+                }
+                // The app was find out successfully
+                else {
+                    res.json(app);
+                }
+            });
+    },
+
     create: function (req, res) {
         App.create({
             name: req.param('name'),
