@@ -1,7 +1,7 @@
 <div class="container">
     <div class="page-header clearfix">
         <div class="pull-left">
-            <h5><%= nickName %>'s Requests</h5>
+            <h5><%= nickName %>'s Bricks</h5>
         </div>
         <div class="pull-right">
             <div class="btn-group">
@@ -14,6 +14,7 @@
         <thead>
         <tr>
             <th></th>
+            <th>App</th>
             <th>Title</th>
             <th>Created By</th>
             <th>Created Date</th>
@@ -36,7 +37,7 @@
                 }
             },
             order: [
-                [3, 'desc']
+                [4, 'desc']
             ],
             columns: [
                 {
@@ -46,10 +47,23 @@
                     orderable: false,
                     className: 'check'
                 },
+                {
+                    render: function(data, type, row){
+                        return '<a class="app-link" href="javascript:void(0);" >' + row.app + '</a>';
+                    }
+                },
                 { data : "title" },
                 { data : "content" },
                 { data : "createdAt" }
             ]
+        }).on('click', '.app-link', function(e){
+            e.stopPropagation();
+            var name = $.trim($(this).text());
+            $.getJSON('/apps/'+name)
+                    .done(function(app){
+                        $('#app-detail-modal').data('app', app)
+                                .modal('show');
+                    });
         }).on('click','td', function(e){
             if($(this).hasClass('.dataTables_empty') ||
                     $(e.target).is('input[type="checkbox"]')){
@@ -94,3 +108,4 @@
     });
 </script>
 <%- partial('../brick/detail') %>
+<%- partial('../app/detail') %>
