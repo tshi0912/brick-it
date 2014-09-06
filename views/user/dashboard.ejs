@@ -10,12 +10,12 @@
         </div>
         <div class="col-md-4">
             <div class="well bg-warning clearfix">
-                <h1 class="visible-lg-inline-block"><a href="/user/<%= session.user.nickName%>/bricks"><%= brickCount %></a></h1> bricks
+                <h1 class="visible-lg-inline-block"><a href="/user/<%= session.user.nickName%>/bricks"><%= brickCount %></a></h1> pendings
             </div>
         </div>
         <div class="col-md-4">
             <div class="well bg-primary clearfix">
-                <h1 class="visible-lg-inline-block"><a href="/user/<%= session.user.nickName%>/requests"><%= requestCount %></a></h1> requests
+                <h1 class="visible-lg-inline-block"><a href="/user/<%= session.user.nickName%>/requests"><%= requestCount %></a></h1> bricks
             </div>
         </div>
     </div>
@@ -35,7 +35,7 @@
                 trigger: 'axis'
             },
             legend: {
-                data:['Requests','Bricks']
+                data:['Bricks','Pendings']
             },
             toolbox: {
                 show : true,
@@ -74,7 +74,7 @@
             ],
             series : [
                 {
-                    name:'Requests',
+                    name:'Bricks',
                     type:'line',
                     data:function (){
                         var list = [];
@@ -85,7 +85,7 @@
                     }()
                 },
                 {
-                    name:'Bricks',
+                    name:'Pendings',
                     type:'bar',
                     data:function (){
                         var list = [];
