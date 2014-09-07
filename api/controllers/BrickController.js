@@ -16,6 +16,7 @@
  */
 
 var Q = require('q');
+var moment = require('moment');
 
 module.exports = {
 
@@ -108,6 +109,27 @@ module.exports = {
                     errors : errors
                 });
             });
+    },
+
+    getDailyStats: function(req, res){
+        var max = moment().subtract('days', 1).eod(),
+            min = max.subtract('days', 30).startOf('day');
+
+        BrickDailyStat.find()
+            .where({
+                owner: req.session.user.nickName,
+                targetDate: { '<' : max},
+                targetDate: { '>' : min}
+            })
+            .exec(function(err, stats){
+                // Error handling
+                if (err) {
+                    return console.log(err);
+                }
+                else {
+
+                }
+            })
     }
 
 };
