@@ -5,101 +5,106 @@
     <div class="row stats-container">
         <div class="col-md-4">
             <div class="well bg-primary clearfix">
-                <h1 class="visible-lg-inline-block"><a href="/user/<%= session.user.nickName%>/apps"><%= appCount %></a></h1> apps
+                <h1 class="visible-lg-inline-block"><a
+                            href="/user/<%= session.user.nickName %>/apps"><%= appCount %></a></h1> apps
             </div>
         </div>
         <div class="col-md-4">
             <div class="well bg-warning clearfix">
-                <h1 class="visible-lg-inline-block"><a href="/user/<%= session.user.nickName%>/bricks"><%= brickCount %></a></h1> pendings
+                <h1 class="visible-lg-inline-block"><a
+                            href="/user/<%= session.user.nickName %>/bricks"><%= brickCount %></a></h1> pendings
             </div>
         </div>
         <div class="col-md-4">
             <div class="well bg-primary clearfix">
-                <h1 class="visible-lg-inline-block"><a href="/user/<%= session.user.nickName%>/requests"><%= requestCount %></a></h1> bricks
+                <h1 class="visible-lg-inline-block"><a
+                            href="/user/<%= session.user.nickName %>/requests"><%= requestCount %></a></h1> bricks
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12" style="overflow-x: hidden">
-            <div id="requests-chart" style="min-height: 300px; margin-left: -60px; margin-right: -80px;" ></div>
+            <div id="requests-chart" style="min-height: 300px; margin-left: -60px; margin-right: -80px;"></div>
         </div>
     </div>
 </div>
 <script src="/linker/js/echarts-plain.js"></script>
 <script src="/linker/js/echarts/theme/macarons.js"></script>
 <script>
-    $(function(){
+    $(function () {
         var requests_chart = echarts.init(document.getElementById('requests-chart'));
-        requests_chart.setOption({
-            tooltip : {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['Bricks','Pendings']
-            },
-            toolbox: {
-                show : true,
-                feature : {
-                    mark : {show: false},
-                    dataView : {readOnly:false},
-                    magicType : {show: false},
-                    restore : {show: false},
-                    saveAsImage : {show: false}
-                }
-            },
-            calculable : true,
-            dataZoom : {
-                show : true,
-                realtime : true,
-                start : 50,
-                end : 75
-            },
-            xAxis : [
-                {
-                    type : 'category',
-                    boundaryGap : true,
-                    data : function (){
-                        var list = [];
-                        for (var i = 1; i <= 30; i++) {
-                            list.push('2013-03-' + i);
-                        }
-                        return list;
-                    }()
-                }
-            ],
-            yAxis : [
-                {
-                    type : 'value'
-                }
-            ],
-            series : [
-                {
-                    name:'Bricks',
-                    type:'line',
-                    data:function (){
-                        var list = [];
-                        for (var i = 1; i <= 30; i++) {
-                            list.push(Math.round(Math.random()* 30) + 30);
-                        }
-                        return list;
-                    }()
-                },
-                {
-                    name:'Pendings',
-                    type:'bar',
-                    data:function (){
-                        var list = [];
-                        for (var i = 1; i <= 30; i++) {
-                            list.push(Math.round(Math.random()* 10));
-                        }
-                        return list;
-                    }()
-                }
-            ]
-        });
-
         requests_chart.setTheme(echarts.themes['macarons']);
 
+        $.getJSON('/me/brickstat')
+                .done(function (stats) {
+                    requests_chart.setOption({
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['Bricks', 'Pendings']
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                mark: {show: false},
+                                dataView: {readOnly: false},
+                                magicType: {show: false},
+                                restore: {show: false},
+                                saveAsImage: {show: false}
+                            }
+                        },
+                        calculable: true,
+                        dataZoom: {
+                            show: true,
+                            realtime: true,
+                            start: 50,
+                            end: 75
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                boundaryGap: true,
+                                data: function () {
+                                    var list = [];
+                                    for (var i = 1; i <= 30; i++) {
+                                        list.push('2013-03-' + i);
+                                    }
+                                    return list;
+                                }()
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        series: [
+                            {
+                                name: 'Bricks',
+                                type: 'line',
+                                data: function () {
+                                    var list = [];
+                                    for (var i = 1; i <= 30; i++) {
+                                        list.push(Math.round(Math.random() * 30) + 30);
+                                    }
+                                    return list;
+                                }()
+                            },
+                            {
+                                name: 'Pendings',
+                                type: 'bar',
+                                data: function () {
+                                    var list = [];
+                                    for (var i = 1; i <= 30; i++) {
+                                        list.push(Math.round(Math.random() * 10));
+                                    }
+                                    return list;
+                                }()
+                            }
+                        ]
+                    });
+                });
     });
 </script>
 

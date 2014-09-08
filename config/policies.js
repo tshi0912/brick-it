@@ -45,11 +45,9 @@ module.exports.policies = {
 
         editFromMyself: ['isAuthenticated','isMine'],
 
-        _create: ['isAuthenticated'],
-
         createFromMyself: ['isAuthenticated','isMine'],
 
-        getBrickStat: ['isAuthenticated','isMine']
+        getBrickStat: ['isAuthenticated']
     },
 
     AppController: {

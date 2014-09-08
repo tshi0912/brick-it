@@ -2,19 +2,27 @@
     <div class="panel panel-default">
         <div class="panel-heading">Create Brick</div>
         <div class="panel-body">
-            <form class="form-horizontal" role="form" action="/brick" method="post">
+            <form class="form-horizontal" role="form"
+                <% if (typeof fromMyself == 'undefined') { %>
+                  action="/brick"
+                <% } else { %>
+                  action="/user/<%= nickName %>/requests"
+                <% } %>
+                  method="post">
                 <div class="form-group">
                     <label for="app-input" class="col-sm-2 control-label"><h4>App</h4></label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-lg" id="app-input" name="app" placeholder="Select target app">
+                        <input type="text" class="form-control input-lg" id="app-input" name="app"
+                               placeholder="Select target app">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="title-input" class="col-sm-2 control-label"><h4>Title</h4></label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-lg" id="title-input" name="title" placeholder="Issue title">
+                        <input type="text" class="form-control input-lg" id="title-input" name="title"
+                               placeholder="Issue title">
                     </div>
                 </div>
                 <% if (typeof fromMyself == 'undefined') { %>
@@ -22,22 +30,25 @@
                     <label for="created-by-nickname-input" class="col-sm-2 control-label"><h4>Your Name</h4></label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-lg" id="created-by-nickname-input" name="createdByNickName" placeholder="Please input your name">
+                        <input type="text" class="form-control input-lg" id="created-by-nickname-input"
+                               name="createdByNickName" placeholder="Please input your name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="created-by-email-input" class="col-sm-2 control-label"><h4>Your Email</h4></label>
 
                     <div class="col-sm-10">
-                        <input type="email" class="form-control input-lg" id="created-by-email-input" name="createdByEmail" placeholder="Please input valid e-mail address">
+                        <input type="email" class="form-control input-lg" id="created-by-email-input"
+                               name="createdByEmail" placeholder="Please input valid e-mail address">
                     </div>
                 </div>
-                <% }%>
+                <% } %>
                 <div class="form-group">
                     <label for="content-input" class="col-sm-2 control-label"><h4>Content</h4></label>
 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-lg" id="content-input" name="content" placeholder="Issue Description">
+                        <input type="text" class="form-control input-lg" id="content-input" name="content"
+                               placeholder="Issue Description">
                     </div>
                 </div>
                 <div class="form-group">
@@ -46,7 +57,8 @@
                             <a href="javascript:;" class="thumbnail">
                                 <img data-src="holder.js/200x200" alt="100%x100%">
                             </a>
-                            <a id="upload-btn" class="btn btn-lg btn-upload" href="javascript:;"><i class="fa fa-plus"></i></a>
+                            <a id="upload-btn" class="btn btn-lg btn-upload" href="javascript:;"><i
+                                        class="fa fa-plus"></i></a>
                         </div>
                         <input type="hidden" name="screenShots" id="screen-shots-input">
                     </div>
@@ -63,7 +75,7 @@
 <script src="/linker/js/plupload/plupload.js"></script>
 <script src="/linker/js/qiniu.js"></script>
 <script>
-    $(function(){
+    $(function () {
 //        $('.fileinput').fileinput();
 
         var uploader = Qiniu.uploader({
@@ -90,30 +102,30 @@
             // },
             auto_start: true,
             init: {
-                'FilesAdded': function(up, files) {
-                   console.log('file added');
+                'FilesAdded': function (up, files) {
+                    console.log('file added');
                 },
-                'BeforeUpload': function(up, file) {
+                'BeforeUpload': function (up, file) {
                     console.log('before file upload');
                 },
-                'UploadProgress': function(up, file) {
+                'UploadProgress': function (up, file) {
                     console.log('uploading ' + file.percent + "%");
                 },
-                'UploadComplete': function() {
+                'UploadComplete': function () {
                     console.log('upload completed');
                 },
-                'FileUploaded': function(up, file, info) {
+                'FileUploaded': function (up, file, info) {
                     console.log('file uploaded');
                     var domain = up.getOption('domain');
                     var res = JSON.parse(info);
                     Handlebars.getTemplate('upload-box')
-                            .done(function(tmpl){
+                            .done(function (tmpl) {
                                 $('#upload-btn').parents('.upload-box').before(tmpl({
                                     key: res.key,
                                     url: domain + res.key
                                 }));
                                 var v = $('input[name="screenShots"]').val();
-                                if($.trim(v)){
+                                if ($.trim(v)) {
                                     v += ',';
                                 }
                                 v += res.key;
@@ -125,7 +137,7 @@
 //                            .attr('src', domain + res.key)
 //                            .css('height', 'auto');
                 },
-                'Error': function(up, err, errTip) {
+                'Error': function (up, err, errTip) {
                     console.error(err);
                 }
                 // ,
@@ -137,11 +149,11 @@
             }
         });
 
-        $('#upload-box-container').on('click','.btn-remove', function(){
+        $('#upload-box-container').on('click', '.btn-remove', function () {
             var $box = $(this).parents('.upload-box'),
-                vs = $('input[name="screenShots"]').val().split(',');
+                    vs = $('input[name="screenShots"]').val().split(',');
             var k = $box.data('uploaded-key');
-            vs = _.filter(vs, function(v){
+            vs = _.filter(vs, function (v) {
                 return v != k;
             });
             console.log('screen shots input : ' + vs);

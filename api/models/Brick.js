@@ -50,11 +50,6 @@ module.exports = {
             // set as a string when passed to an adapter
             type: 'string',
             required: true
-        },
-
-        createdAt: {
-            type: 'datetime',
-            required: true
         }
 
     }

@@ -35,69 +35,124 @@ module.exports = {
         });
     },
 
-    edit : function(req, res){
+    edit: function (req, res) {
         return res.view({
             navItem: 'bricks'
         });
     },
 
-    editFromMyself : function(req, res){
+    editFromMyself: function (req, res) {
         return res.view('brick/edit', {
             navItem: 'bricks',
-            fromMyself: true
+            fromMyself: true,
+            nickName: req.param('nickName')
         });
     },
 
-    _create: function(req, res, createdByNickName,
-                      createdByEmail,completedUrl){
+    _create: function (req, res, createdByNickName, createdByEmail, completedUrl) {
         App.findOne()
             .where({ name: req.param('app') })
-            .then(function(app){
-                Brick.create({
-                    app: req.param('app'),
-                    title: req.param('title'),
-                    content: req.param('content'),
-                    targetOwner: app.owner,
-                    screenShots: req.param('screenShots')? req.param('screenShots').split(',') : null,
-                    createdByNickName: createdByNickName,
-                    createdByEmail: createdByEmail,
-                    createdAt: new Date()
-                }).done(function(err, brick){
-                    // Error handling
-                    if (err) {
-                        return console.log(err);
-                    }
-                    // The brick was created successfully
-                    else {
-                        console.log("brick created:", brick);
-                    }
-                });
-                res.redirect(completedUrl);
+            .then(function (app) {
+
+                Q.all(
+                    // To save brick
+                    Brick.create({
+                        app: req.param('app'),
+                        title: req.param('title'),
+                        content: req.param('content'),
+                        targetOwner: app.owner,
+                        screenShots: req.param('screenShots') ? req.param('screenShots').split(',') : null,
+                        createdByNickName: createdByNickName,
+                        createdByEmail: createdByEmail,
+                        createdAt: new Date()
+                    }),
+                    // To count brick
+                    BrickDailyStat.findOne()
+                        .where({
+                            owner: createdByNickName,
+                            targetDate: moment().startOf('day')
+                        }).then(function (stat) {
+                            if (stat) {
+                                return stat.update({
+                                    brickCount: stat.brickCount + 1
+                                });
+                            } else {
+                                return BrickDailyStat.create({
+                                    brickCount: 1,
+                                    pendingCount: 0,
+                                    owner: createdByNickName,
+                                    targetDate: moment().startOf('day')
+                                });
+                            }
+                        }),
+                    // To count pending
+                    BrickDailyStat.findOne()
+                        .where({
+                            owner: app.owner,
+                            targetDate: moment().startOf('day')
+                        }).then(function (stat) {
+                            if (stat) {
+                                return stat.update({
+                                    pendingCount: stat.pendingCount + 1
+                                });
+                            } else {
+                                return BrickDailyStat.create({
+                                    brickCount: 0,
+                                    pendingCount: 1,
+                                    owner: app.owner,
+                                    targetDate: moment().startOf('day')
+                                });
+                            }
+                        })
+                ).done(function (results) {
+                        res.redirect(completedUrl);
+                    });
+
             });
     },
 
-    createFromAdmin: function(req, res){
+    createFromAdmin: function (req, res) {
         var createdByNickName = req.param('createdByNickName'),
             createdByEmail = req.param('createdByEmail');
-        _create(req, res, createdByNickName, createdByEmail, '/brick');
+        var record = {
+            app: req.param('app'),
+            title: req.param('title'),
+            content: req.param('content'),
+            screenShots: req.param('screenShots') ? req.param('screenShots').split(',') : null,
+            createdByNickName: req.param('createdByNickName'),
+            createdByEmail: req.param('createdByEmail')
+        };
+        BrickService.create(record)
+            .done(function(results){
+                res.redirect('/brick');
+            });
     },
 
-    createFromMyself: function(req, res){
-        var createdByNickName = req.session.user.nickName,
-            createdByEmail = req.session.user.email;
-        _create(req, res, createdByNickName, createdByEmail, '/user/'+createdByNickName+'/requests');
+    createFromMyself: function (req, res) {
+        var record = {
+            app: req.param('app'),
+            title: req.param('title'),
+            content: req.param('content'),
+            screenShots: req.param('screenShots') ? req.param('screenShots').split(',') : null,
+            createdByNickName: req.session.user.nickName,
+            createdByEmail: req.session.user.email
+        };
+        BrickService.create(record)
+            .done(function(results){
+                res.redirect('/user/' + req.session.user.nickName + '/requests' );
+            });
     },
 
-    destroy : function(req, res){
+    destroy: function (req, res) {
         var ids = req.param('ids');
         Brick.findByIdIn(ids)
-            .then(function(bricks){
-                var ds = []
-                 bricks.forEach(function(brick){
-                     ds.push(Brick.destroy().where({id : brick.id}));
-                 });
+            .then(function (bricks) {
+                var ds = [];
+                bricks.forEach(function (brick) {
+                    ds.push(Brick.destroy().where({id: brick.id}));
+                });
                 return Q.allSettled(ds);
-            }).done(function(results){
+            }).done(function (results) {
                 var errors = [];
                 results.forEach(function (result) {
                     if (result.state !== "fulfilled") {
@@ -105,29 +160,29 @@ module.exports = {
                     }
                 });
                 res.json({
-                    ok : (errors.length == 0 ? true : false),
-                    errors : errors
+                    ok: (errors.length == 0 ? true : false),
+                    errors: errors
                 });
             });
     },
 
-    getBrickStat: function(req, res){
-        var max = moment().subtract('days', 1).eod(),
-            min = max.subtract('days', 30).startOf('day');
+    getBrickStat: function (req, res) {
+        var max = moment().subtract(1, 'days').endOf('day'),
+            min = max.subtract(30, 'days').startOf('day');
 
         BrickDailyStat.find()
             .where({
                 owner: req.session.user.nickName,
-                targetDate: { '<' : max},
-                targetDate: { '>' : min}
+                targetDate: { '<=': max},
+                targetDate: { '>=': min}
             })
-            .exec(function(err, stats){
+            .exec(function (err, stats) {
                 // Error handling
                 if (err) {
                     return console.log(err);
                 }
                 else {
-                    res.json(stats)
+                    res.json(stats);
                 }
             })
     }
