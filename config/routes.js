@@ -46,6 +46,8 @@ module.exports.routes = {
 
     '/me': 'UserController.dashboard',
 
+    '/me/brickstat': 'BrickController.getBrickStat',
+
     '/uptoken': 'StorageController.uptoken',
 
     'get /signout': 'UserController.signout',

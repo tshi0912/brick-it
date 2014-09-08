@@ -47,7 +47,9 @@ module.exports.policies = {
 
         _create: ['isAuthenticated'],
 
-        createFromMyself: ['isAuthenticated','isMine']
+        createFromMyself: ['isAuthenticated','isMine'],
+
+        getBrickStat: ['isAuthenticated','isMine']
     },
 
     AppController: {

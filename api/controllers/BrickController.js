@@ -111,7 +111,7 @@ module.exports = {
             });
     },
 
-    getDailyStats: function(req, res){
+    getBrickStat: function(req, res){
         var max = moment().subtract('days', 1).eod(),
             min = max.subtract('days', 30).startOf('day');
 
@@ -127,7 +127,7 @@ module.exports = {
                     return console.log(err);
                 }
                 else {
-
+                    res.json(stats)
                 }
             })
     }
