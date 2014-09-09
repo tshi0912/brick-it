@@ -40,9 +40,9 @@ module.exports = {
                                     targetDate: moment().startOf('day')
                                 }).then(function (stat) {
                                     if (stat) {
-                                        return stat.update({
-                                            brickCount: stat.brickCount + 1
-                                        });
+                                        stat.brickCount ++;
+                                        stat.save();
+                                        return stat;
                                     } else {
                                         return BrickDailyStat.create({
                                             brickCount: 1,
@@ -59,9 +59,9 @@ module.exports = {
                                     targetDate: moment().startOf('day')
                                 }).then(function (stat) {
                                     if (stat) {
-                                        return stat.update({
-                                            pendingCount: stat.pendingCount + 1
-                                        });
+                                        stat.pendingCount ++;
+                                        stat.save();
+                                        return stat;
                                     } else {
                                         return BrickDailyStat.create({
                                             brickCount: 0,
