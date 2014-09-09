@@ -29,48 +29,65 @@ module.exports = {
                 record.targetOwner = app.owner;
 
                 // save it
-                return Q.all(
-                    // To save brick
-                    Brick.create(record),
-                    // To count brick
-                    BrickDailyStat.findOne()
-                        .where({
-                            owner: record.owner,
-                            targetDate: moment().startOf('day')
-                        }).then(function (stat) {
-                            if (stat) {
-                                return stat.update({
-                                    brickCount: stat.brickCount + 1
-                                });
-                            } else {
-                                return BrickDailyStat.create({
-                                    brickCount: 1,
-                                    pendingCount: 0,
-                                    owner: record.owner,
+                return Q(Brick.create(record))
+                    .then(function (brick) {
+                        console.log('create brick successfully ' + brick);
+                        return Q.allSettled([
+                            // To count brick
+                            BrickDailyStat.findOne()
+                                .where({
+                                    owner: brick.targetOwner,
                                     targetDate: moment().startOf('day')
-                                });
-                            }
-                        }),
-                    // To count pending
-                    BrickDailyStat.findOne()
-                        .where({
-                            owner: app.owner,
-                            targetDate: moment().startOf('day')
-                        }).then(function (stat) {
-                            if (stat) {
-                                return stat.update({
-                                    pendingCount: stat.pendingCount + 1
-                                });
-                            } else {
-                                return BrickDailyStat.create({
-                                    brickCount: 0,
-                                    pendingCount: 1,
+                                }).then(function (stat) {
+                                    if (stat) {
+                                        return stat.update({
+                                            brickCount: stat.brickCount + 1
+                                        });
+                                    } else {
+                                        return BrickDailyStat.create({
+                                            brickCount: 1,
+                                            pendingCount: 0,
+                                            owner: brick.targetOwner,
+                                            targetDate: moment().startOf('day')
+                                        });
+                                    }
+                                }),
+                            // To count pending
+                            BrickDailyStat.findOne()
+                                .where({
                                     owner: app.owner,
                                     targetDate: moment().startOf('day')
-                                });
-                            }
-                        })
-                );
+                                }).then(function (stat) {
+                                    if (stat) {
+                                        return stat.update({
+                                            pendingCount: stat.pendingCount + 1
+                                        });
+                                    } else {
+                                        return BrickDailyStat.create({
+                                            brickCount: 0,
+                                            pendingCount: 1,
+                                            owner: app.owner,
+                                            targetDate: moment().startOf('day')
+                                        });
+                                    }
+                                })]);
+                    })
+                    .spread(function (brick, pending) {
+
+                        if (brick.state !== "fulfilled") {
+                            console.log('brick count create failed with ' + brick.reason);
+                        }else{
+                            console.log('brick count create successfully' + brick.value);
+                        }
+
+                        if (pending.state !== "fulfilled") {
+                            console.log('pending count create failed with ' + pending.reason);
+                        }else{
+                            console.log('pending count create successfully' + pending.value);
+                        }
+
+                        return [brick, pending];
+                    });
 
             });
     }
