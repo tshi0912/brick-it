@@ -4,7 +4,10 @@
             <h5>All Users</h5>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="/user/edit"><i class="fa fa-plus"></i> Create User</a>
+            <div class="btn-group">
+                <a class="btn btn-default" href="javascript:void(0);"><i class="fa fa-times"></i></a>
+                <a class="btn btn-default" href="/user/edit"><i class="fa fa-plus"></i></a>
+            </div>
         </div>
     </div>
     <table id="users-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -20,7 +23,7 @@
 </div>
 <script>
     $(function () {
-        $('#users-table').dataTable({
+        var users_table = $('#users-table').dataTable({
             "processing": true,
             "serverSide": true,
             "ajax": {
@@ -42,6 +45,42 @@
                 { "data": "email" },
                 { "data": "createdAt" }
             ]
+        }).on('click','td', function(e){
+            if($(this).hasClass('.dataTables_empty') ||
+                    $(e.target).is('input[type="checkbox"]')){
+                e.stopPropagation();
+            }
+            if($(e.target).is("label")){
+                e.preventDefault();
+                var ele = $(e.target).find('input');
+                if(ele.is(':checked')){
+                    ele.prop('checked', false);
+                }else{
+                    ele.prop('checked', true);
+                }
+                $(this).parents('tr').toggleClass('selected');
+                e.stopPropagation();
+            }
+            if($(e.target).is('input[type="checkbox"]')){
+                $(this).parents('tr').toggleClass('selected');
+            }
+        }).api();
+
+        $('.btn-group .btn:first-child').on('click', function(){
+            var selecteds = users_table.rows('.selected').data(),
+                    ids = [];
+            _.each(selecteds, function(item){
+                ids.push(item.id);
+            });
+            $.ajax({
+                url : '/user',
+                type: 'delete',
+                data: {ids: ids}
+            }).done(function(result){
+                if(result.ok) {
+                    users_table.draw(false);
+                }
+            });
         });
     });
 </script>
