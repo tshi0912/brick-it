@@ -64,6 +64,8 @@ module.exports.routes = {
 
     'post /user': 'UserController.create',
 
+    'delete /user': 'UserController.destroy',
+
     'get /user/edit': 'UserController.edit',
 
     'get /brick': 'BrickController.index',
