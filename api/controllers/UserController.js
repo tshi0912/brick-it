@@ -129,5 +129,25 @@ module.exports = {
             }
         });
         res.redirect('/');
+    },
+
+    destroy: function (req, res) {
+        var ids = req.param('ids') || [];
+        var ds = [];
+        ids.forEach(function (id) {
+            ds.push(User.destroy().where({id: id}));
+        });
+        Q.allSettled(ds).done(function (results) {
+            var errors = [];
+            results.forEach(function (result) {
+                if (result.state !== "fulfilled") {
+                    errors.push(result.reason);
+                }
+            });
+            res.json({
+                ok: (errors.length == 0 ? true : false),
+                errors: errors
+            });
+        });
     }
 };
