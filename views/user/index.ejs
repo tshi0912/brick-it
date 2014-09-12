@@ -64,6 +64,10 @@
             if($(e.target).is('input[type="checkbox"]')){
                 $(this).parents('tr').toggleClass('selected');
             }
+        }).on('click','tbody > tr', function(e){
+            var user = users_table.row($(this)).data();
+            $('#user-detail-modal').data('user', user)
+                    .modal('show');
         }).api();
 
         $('.btn-group .btn:first-child').on('click', function(){
