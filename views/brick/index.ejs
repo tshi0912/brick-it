@@ -72,8 +72,8 @@
                     });
         }).on('click', '.user-link', function(e){
             e.stopPropagation();
-            var name = $.trim($(this).text());
-            $.getJSON('/users/'+name)
+            var nickName = $.trim($(this).text());
+            $.getJSON('/users/'+nickName)
                     .done(function(user){
                         $('#user-detail-modal').data('user', user)
                                 .modal('show');

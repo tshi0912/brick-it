@@ -112,6 +112,20 @@ module.exports = {
         });
     },
 
+    getByNickName: function(req, res){
+        User.findOneByNickName(req.param('nickName'))
+            .done(function(err, user){
+                // Error handling
+                if (err) {
+                    return console.log(err);
+                }
+                // The user was find out successfully
+                else {
+                    res.json(user);
+                }
+            });
+    },
+
     create: function (req, res) {
         User.create({
             nickName: req.param('nickName'),
