@@ -54,7 +54,12 @@
                     }
                 },
                 { "data": "title" },
-                { "data": "createdByEmail" },
+
+                {
+                    render: function(data, type, row){
+                        return '<a class="user-link" href="javascript:void(0);" >' + row.createdByNickName + '</a>';
+                    }
+                },
                 { "data": "createdAt" }
             ]
         }).on('click', '.app-link', function(e){
@@ -63,6 +68,14 @@
             $.getJSON('/apps/'+name)
                     .done(function(app){
                         $('#app-detail-modal').data('app', app)
+                                .modal('show');
+                    });
+        }).on('click', '.user-link', function(e){
+            e.stopPropagation();
+            var name = $.trim($(this).text());
+            $.getJSON('/users/'+name)
+                    .done(function(user){
+                        $('#user-detail-modal').data('user', user)
                                 .modal('show');
                     });
         }).on('click','td', function(e){
@@ -110,3 +123,4 @@
 </script>
 <%- partial('detail') %>
 <%- partial('../app/detail') %>
+<%- partial('../user/detail') %>
