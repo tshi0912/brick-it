@@ -44,9 +44,21 @@
                 },
                 { "data": "name" },
                 { "data": "domain" },
-                { "data": "owner" },
+                {
+                    render: function(data, type, row){
+                        return '<a class="user-link" href="javascript:void(0);" >' + row.owner + '</a>';
+                    }
+                },
                 { "data": "createdAt" }
             ]
+        }).on('click', '.user-link', function(e){
+            e.stopPropagation();
+            var nickName = $.trim($(this).text());
+            $.getJSON('/users/'+nickName)
+                    .done(function(user){
+                        $('#user-detail-modal').data('user', user)
+                                .modal('show');
+                    });
         }).on('click','td', function(e){
             if($(this).hasClass('.dataTables_empty') ||
                     $(e.target).is('input[type="checkbox"]')){
@@ -91,3 +103,4 @@
     });
 </script>
 <%- partial('detail') %>
+<%- partial('../user/detail') %>
