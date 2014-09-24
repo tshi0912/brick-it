@@ -13,10 +13,10 @@
     <table id="bricks-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
-            <th></th>
+            <th><label><input type="checkbox"></label></th>
             <th>App</th>
             <th>Title</th>
-            <th>Created By</th>
+            <th>Content</th>
             <th>Created Date</th>
         </tr>
         </thead>
@@ -56,6 +56,12 @@
                 { data : "content" },
                 { data : "createdAt" }
             ]
+        }).on('click', 'th:first-child label', function(){
+            var checked = $(this).find('input').prop('checked');
+            var $tr = $('#bricks-table tbody').find('td:first-child input[type="checkbox"]')
+                    .prop('checked', checked)
+                    .parents('tr');
+            checked ? $tr.addClass('selected') : $tr.removeClass('selected');
         }).on('click', '.app-link', function(e){
             e.stopPropagation();
             var name = $.trim($(this).text());
